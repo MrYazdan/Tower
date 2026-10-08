@@ -200,32 +200,3 @@ Tower supports both real-time systemd journal inspection and persistent rotating
    ```bash
    sudo tail -f /var/log/tower/tower.log
    ```
-
-## Development
-
-```bash
-go test ./...
-go build ./...
-```
-
-## CI/CD & Automated Releases
-
-Tower includes a production-ready GitHub Actions workflow (`.github/workflows/ci-cd.yaml`):
-
-### 1. Push to `main` (Continuous Integration)
-- Automatically runs unit tests and race detection (`go test -v -race ./...`).
-- Verifies module dependencies and code formatting.
-
-### 2. Git Tag Push (Automated Binary Releases & Changelog)
-When a semantic version tag is pushed (e.g. `v1.0.0`):
-1. **Tests**: Validates all tests before release.
-2. **Binary Compilation**: Builds standalone, statically linked binaries for `linux/amd64` and `linux/arm64`.
-3. **Automated Changelog**: Parses Gitmoji and conventional commits with `git-cliff` to generate categorized release notes.
-4. **GitHub Release**: Publishes a new GitHub Release with the changelog, executable binaries, and example configuration.
-
-To release a new version:
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
